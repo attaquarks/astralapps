@@ -1,14 +1,12 @@
 @import "tailwindcss";
 
 /*
-  AstralApps design system
-  Brand palette is derived from the logo mark (public/favicon.svg):
-  violet #863bff / #7e14ff and blue #47bfff over a deep space background.
+  AstralApps design system — editorial.
+  Light cream + ink by default, with a dark editorial variant. Restrained
+  palette (a single violet accent), hairline borders, generous whitespace,
+  bold sans + italic serif accents.
 */
 
-/* Map semantic + brand tokens to Tailwind utilities. `inline` keeps them
-   pointing at the runtime CSS variables below so theme switching works
-   without regenerating utilities (bg-bg, text-heading, from-brand, etc.). */
 @theme inline {
   --color-bg: var(--bg);
   --color-bg-2: var(--bg-2);
@@ -24,29 +22,30 @@
   --color-brand-strong: var(--brand-strong);
   --color-accent: var(--accent);
 
-  --font-display: "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", "Menlo", monospace;
+  --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
 }
 
 :root {
-  /* Dark (default) */
-  --bg: #08060f;
-  --bg-2: #0c0918;
-  --surface: rgba(22, 17, 41, 0.55);
-  --surface-2: rgba(34, 26, 60, 0.72);
-  --border: rgba(168, 130, 255, 0.14);
-  --border-strong: rgba(168, 130, 255, 0.3);
-  --heading: #f4f1ff;
-  --text: #cdc7e4;
-  --muted: #948cb4;
-  --brand: #863bff;
-  --brand-soft: #a98bff;
-  --brand-strong: #7e14ff;
-  --accent: #47bfff;
-  --glow: rgba(134, 59, 255, 0.45);
+  /* Light editorial (default) */
+  --bg: #eeece4;
+  --bg-2: #e7e4da;
+  --surface: #faf9f5;
+  --surface-2: #ffffff;
+  --border: rgba(22, 19, 16, 0.12);
+  --border-strong: rgba(22, 19, 16, 0.22);
+  --heading: #161310;
+  --text: #3b352e;
+  --muted: #756f66;
+  --brand: #6d28d9;
+  --brand-soft: #7c3aed;
+  --brand-strong: #5b21b6;
+  --accent: #6d28d9;
+  --glow: rgba(109, 40, 217, 0.16);
 
-  color-scheme: dark;
+  color-scheme: light;
   font-family: var(--font-sans);
   color: var(--text);
   background-color: var(--bg);
@@ -56,23 +55,24 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-:root[data-theme="light"] {
-  --bg: #f6f4fc;
-  --bg-2: #ece7f8;
-  --surface: rgba(255, 255, 255, 0.7);
-  --surface-2: rgba(255, 255, 255, 0.92);
-  --border: rgba(126, 20, 255, 0.14);
-  --border-strong: rgba(126, 20, 255, 0.26);
-  --heading: #150b2c;
-  --text: #2e2748;
-  --muted: #6a6288;
-  --brand: #7c2bff;
-  --brand-soft: #9a6bff;
-  --brand-strong: #6a14e8;
-  --accent: #1f8fe0;
-  --glow: rgba(124, 43, 255, 0.22);
+:root[data-theme="dark"] {
+  /* Dark editorial */
+  --bg: #15120f;
+  --bg-2: #1b1713;
+  --surface: #201b16;
+  --surface-2: #271f18;
+  --border: rgba(245, 242, 236, 0.12);
+  --border-strong: rgba(245, 242, 236, 0.2);
+  --heading: #f6f3ec;
+  --text: #cac3b7;
+  --muted: #8f887d;
+  --brand: #b69bff;
+  --brand-soft: #cbb8ff;
+  --brand-strong: #9a78ff;
+  --accent: #b69bff;
+  --glow: rgba(182, 155, 255, 0.28);
 
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 * {
@@ -81,7 +81,6 @@
 
 html {
   scroll-behavior: smooth;
-  /* offset anchored sections so they aren't hidden under the fixed header */
   scroll-padding-top: 5.5rem;
 }
 
@@ -91,11 +90,19 @@ body {
   background-color: var(--bg);
   color: var(--text);
   overflow-x: hidden;
+  font-feature-settings: "ss01";
 }
 
 h1, h2, h3, h4 {
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   letter-spacing: -0.02em;
+}
+
+/* italic-serif accent for editorial headings */
+.serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
 }
 
 button,
@@ -104,178 +111,126 @@ a {
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--brand) 40%, transparent);
+  background: color-mix(in srgb, var(--brand) 22%, transparent);
   color: var(--heading);
 }
 
-/* ---- Reusable layout + surface utilities ---- */
+/* ---- Layout + surfaces ---- */
 
 .section-shell {
   position: relative;
   margin-inline: auto;
   max-width: 1200px;
-  padding: 7rem 1.5rem;
+  padding: 6.5rem 1.5rem;
 }
 
 @media (max-width: 767px) {
   .section-shell {
-    padding-block: 4.5rem;
+    padding-block: 4rem;
   }
 }
 
 .glass {
   border: 1px solid var(--border);
-  background:
-    linear-gradient(150deg, var(--surface-2), var(--surface));
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .glass-card {
   border: 1px solid var(--border);
-  border-radius: 20px;
-  background:
-    linear-gradient(150deg, var(--surface-2), var(--surface));
+  border-radius: 16px;
+  background: var(--surface);
   box-shadow:
-    0 30px 80px -40px rgba(0, 0, 0, 0.7),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+    0 1px 2px rgba(22, 19, 16, 0.04),
+    0 26px 50px -42px rgba(22, 19, 16, 0.3);
 }
 
-:root[data-theme="light"] .glass-card {
-  box-shadow:
-    0 30px 70px -45px rgba(86, 35, 160, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-}
-
-/* Gradient hairline border on hover-able cards */
+/* hover-able cards — subtle hairline + lift */
 .card-glow {
-  position: relative;
-  isolation: isolate;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
-.card-glow::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(150deg, color-mix(in srgb, var(--brand) 60%, transparent), color-mix(in srgb, var(--accent) 50%, transparent));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-  z-index: 1;
-}
-.card-glow:hover::after {
-  opacity: 1;
+.card-glow:hover {
+  border-color: var(--border-strong);
+  box-shadow:
+    0 1px 2px rgba(22, 19, 16, 0.04),
+    0 30px 60px -38px rgba(22, 19, 16, 0.32);
 }
 
+/* emphasis — a single restrained violet accent */
 .text-gradient {
-  background: linear-gradient(100deg, var(--brand-soft), var(--accent));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--brand);
 }
 
 .eyebrow {
-  font-family: var(--font-display);
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.22em;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--brand-soft);
+  color: var(--muted);
 }
 
-/* Soft animated aurora blob used behind ambient sections (no WebGL) */
+/* soft ambient blob (used sparingly) */
 .aurora-blob {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(80px);
-  opacity: 0.5;
+  filter: blur(90px);
+  opacity: 0.4;
   pointer-events: none;
   will-change: transform;
 }
 
-/* Marquee track */
+/* ---- Animations ---- */
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee 38s linear infinite;
+  animation: marquee 40s linear infinite;
 }
 @keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
+  to { transform: translateX(-50%); }
 }
 
 @keyframes drift {
   0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
   50% { transform: translate3d(3%, -4%, 0) scale(1.08); }
 }
-.animate-drift {
-  animation: drift 18s ease-in-out infinite;
-}
+.animate-drift { animation: drift 20s ease-in-out infinite; }
 
 @keyframes pop {
-  from { opacity: 0; transform: translateY(8px) scale(0.96); }
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
-.animate-pop {
-  animation: pop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
+.animate-pop { animation: pop 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 
-/* ---- Command-center / terminal system (#9 #10 #11) ---- */
-
-/* faint signal grid, like circuit traces, fading out from the top */
+/* faint registration grid */
 .signal-grid {
   background-image:
-    linear-gradient(to right, color-mix(in srgb, var(--brand) 8%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in srgb, var(--brand) 8%, transparent) 1px, transparent 1px);
+    linear-gradient(to right, color-mix(in srgb, var(--heading) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--heading) 6%, transparent) 1px, transparent 1px);
   background-size: 46px 46px;
   -webkit-mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, #000 28%, transparent 76%);
   mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, #000 28%, transparent 76%);
 }
 
-/* slow vertical scroll for the blurred JSON/webhook feed columns (#11) */
 @keyframes feed-scroll {
   from { transform: translateY(0); }
   to { transform: translateY(-50%); }
 }
-.animate-feed {
-  animation: feed-scroll 44s linear infinite;
-}
+.animate-feed { animation: feed-scroll 44s linear infinite; }
 
-/* blinking terminal caret (#10) */
-@keyframes caret-blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-}
-.caret::after {
-  content: "";
-  display: inline-block;
-  width: 0.55ch;
-  height: 1.05em;
-  margin-left: 3px;
-  translate: 0 0.16em;
-  background: var(--accent);
-  animation: caret-blink 1s steps(1) infinite;
-}
-
-/* live status dot — radiating pulse for "in production right now" (#17) */
+/* live status dot */
 @keyframes live-pulse {
-  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 65%, transparent); }
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand) 55%, transparent); }
   70% { box-shadow: 0 0 0 7px transparent; }
   100% { box-shadow: 0 0 0 0 transparent; }
 }
-.live-dot {
-  animation: live-pulse 2.2s ease-out infinite;
-}
+.live-dot { animation: live-pulse 2.2s ease-out infinite; }
 
-/* ---- Service mini-demos (#8): looping "the automation actually working" ---- */
+/* service mini-demos (#8) */
 @keyframes anim-travel {
   0% { left: 6%; opacity: 0; }
   12% { opacity: 1; }
@@ -297,9 +252,7 @@ a {
 .anim-bar { animation: anim-bar 2.4s ease-in-out infinite; transform-origin: bottom; }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+  html { scroll-behavior: auto; }
   .marquee-track,
   .animate-drift,
   .animate-pop,
@@ -307,28 +260,23 @@ a {
   .live-dot,
   .anim-travel,
   .anim-fill,
-  .anim-bar,
-  .caret::after {
+  .anim-bar {
     animation: none;
   }
 }
 
 /* Focus styling */
-:where(a, button, input, textarea, [tabindex]):focus-visible {
-  outline: 2px solid var(--accent);
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--brand);
   outline-offset: 3px;
-  border-radius: 6px;
+  border-radius: 4px;
 }
 
-/* Custom scrollbar (cosmetic, dark) */
-::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg);
-}
+/* Scrollbar */
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--brand) 40%, transparent);
+  background: var(--border-strong);
   border-radius: 9999px;
-  border: 3px solid var(--bg);
+  border: 4px solid var(--bg);
 }

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { IndustryProvider } from './context/IndustryContext'
-import { CommandCenterBackground } from './components/ui/CommandCenterBackground'
 import { Header } from './components/layout/Header'
 import { Footer } from './components/layout/Footer'
 import { HeroSection } from './components/sections/HeroSection'
@@ -22,9 +21,9 @@ import { ContactSection } from './components/sections/ContactSection'
 
 export type ThemeMode = 'dark' | 'light'
 
-/* Read the theme the pre-paint script in index.html already resolved. */
+/* Read the theme the pre-paint script in index.html already resolved (light default). */
 function getInitialTheme(): ThemeMode {
-  return document.documentElement.dataset.theme === 'light' ? 'light' : 'dark'
+  return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'
 }
 
 function App() {
@@ -42,7 +41,6 @@ function App() {
   return (
     <IndustryProvider>
       <div className="relative min-h-screen text-text">
-        <CommandCenterBackground />
         <Header theme={theme} onThemeChange={setTheme} />
         <main>
           {/* Hook — the site is the demo */}

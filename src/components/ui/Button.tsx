@@ -21,11 +21,9 @@ const sizes = {
 }
 
 const variants = {
-  // Brand gradient pill — violet → blue, with a soft glow.
-  primary:
-    'text-white border border-transparent bg-[linear-gradient(100deg,var(--brand),var(--accent))] shadow-[0_10px_34px_-12px_var(--glow)] hover:brightness-110 hover:shadow-[0_14px_40px_-10px_var(--glow)]',
-  secondary:
-    'text-heading border border-border-strong bg-surface hover:border-[color-mix(in_srgb,var(--brand)_55%,transparent)] hover:bg-surface-2',
+  // Editorial ink pill (inverts cleanly in dark mode).
+  primary: 'border border-transparent bg-heading text-bg hover:opacity-90',
+  secondary: 'border border-border-strong text-heading hover:bg-surface',
 }
 
 export function Button({

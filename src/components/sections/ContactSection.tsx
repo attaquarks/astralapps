@@ -1,6 +1,5 @@
 import { site, socialLinks } from '../../data/site'
 import { useReveal } from '../../hooks/useReveal'
-import { AuroraBackground } from '../ui/AuroraBackground'
 import { Button } from '../ui/Button'
 import { Icon } from '../ui/Icon'
 import { ContactForm } from './ContactForm'
@@ -40,8 +39,7 @@ export function ContactSection() {
 
   return (
     <section className="section-shell" id="contact" ref={sectionRef}>
-      <div className="relative overflow-hidden rounded-3xl border border-border-strong bg-[linear-gradient(150deg,var(--surface-2),var(--surface))] p-6 md:p-10">
-        <AuroraBackground opacity={0.3} />
+      <div className="relative overflow-hidden rounded-3xl border border-border bg-surface p-6 md:p-10">
         <div className="relative z-10">
           <div className="max-w-2xl">
             <p data-reveal className="eyebrow">
@@ -51,7 +49,7 @@ export function ContactSection() {
               data-reveal
               className="mt-4 text-balance font-display text-3xl font-semibold leading-[1.1] text-heading md:text-5xl"
             >
-              Let's automate something <span className="text-gradient">intelligent.</span>
+              Let's automate something <span className="serif text-[1.1em] font-normal">intelligent.</span>
             </h2>
             <p data-reveal className="mt-5 text-base leading-8 text-muted md:text-lg">
               Book a call to talk through it live, or send a message — we usually reply within two

@@ -1,53 +1,48 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#08060f" />
+    <meta name="theme-color" content="#eeece4" />
 
-    <title>AstralApps — Intelligent software, automations & AI products</title>
+    <title>AstralApps — AI automation studio</title>
     <meta
       name="description"
-      content="AstralApps is a software studio building AI products, web platforms, SaaS dashboards, and automation systems for teams that want to move faster."
+      content="AstralApps is an AI automation studio. Describe a task your team does by hand and we design the system that does it for them — AI products, automations, and integrations."
     />
 
     <!-- Open Graph / social sharing -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="AstralApps — Intelligent software, automations & AI products" />
+    <meta property="og:title" content="AstralApps — AI automation studio" />
     <meta
       property="og:description"
-      content="A software studio building AI products, web platforms, SaaS dashboards, and automation systems."
+      content="Describe a manual task your team does every week — our AI designs the automation that runs it for them."
     />
     <meta property="og:image" content="/favicon.svg" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="AstralApps" />
     <meta
       name="twitter:description"
-      content="Intelligent software, automations & AI products."
+      content="An AI automation studio — the site runs AI live."
     />
 
-    <!-- Fonts: Space Grotesk (display) + Inter (body) -->
+    <!-- Fonts: Inter (sans) + Instrument Serif (editorial italic accents) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
 
-    <!-- Set theme before paint to avoid a flash of the wrong theme -->
+    <!-- Set theme before paint to avoid a flash of the wrong theme (light editorial by default) -->
     <script>
       (function () {
         try {
           var stored = localStorage.getItem("astral-theme");
-          var theme =
-            stored ||
-            (window.matchMedia("(prefers-color-scheme: light)").matches
-              ? "light"
-              : "dark");
-          document.documentElement.dataset.theme = theme;
+          document.documentElement.dataset.theme = stored === "dark" ? "dark" : "light";
         } catch (e) {
-          document.documentElement.dataset.theme = "dark";
+          document.documentElement.dataset.theme = "light";
         }
       })();
     </script>

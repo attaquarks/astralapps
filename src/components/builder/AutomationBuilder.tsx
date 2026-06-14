@@ -87,7 +87,7 @@ export function AutomationBuilder() {
             type="submit"
             disabled={status === 'loading' || task.trim().length < 5}
             aria-label="Build automation blueprint"
-            className="absolute bottom-2.5 right-2.5 grid size-10 place-items-center rounded-xl bg-[linear-gradient(100deg,var(--brand),var(--accent))] text-white shadow-[0_8px_24px_-8px_var(--glow)] transition hover:brightness-110 disabled:opacity-40"
+            className="absolute bottom-2.5 right-2.5 grid size-10 place-items-center rounded-xl bg-heading text-bg transition hover:opacity-90 disabled:opacity-40"
           >
             {status === 'loading' ? (
               <span className="size-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />

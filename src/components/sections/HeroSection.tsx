@@ -28,21 +28,15 @@ export function HeroSection() {
       id="hero"
       ref={sectionRef}
     >
-      {/* brand glow behind the headline */}
-      <div
-        aria-hidden="true"
-        className="absolute left-1/2 top-1/3 -z-0 h-[36rem] w-[36rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-50 blur-[120px]"
-        style={{ background: 'radial-gradient(circle, var(--brand), transparent 65%)' }}
-      />
-
       <div className="relative z-10 mx-auto w-full max-w-3xl px-5 text-center md:px-8">
-        <span className="hero-reveal inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5 font-mono text-xs text-text backdrop-blur-sm">
-          <span className="live-dot size-2 rounded-full bg-accent" />
-          AI automation studio · running live
+        <span className="hero-reveal inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5 text-xs text-muted">
+          <span className="live-dot size-1.5 rounded-full bg-brand" />
+          AI automation studio
         </span>
 
-        <h1 className="hero-reveal mt-6 text-balance font-display text-4xl font-semibold leading-[1.05] text-heading sm:text-5xl lg:text-[3.6rem]">
-          Watch your busywork become an <span className="text-gradient">automation.</span>
+        <h1 className="hero-reveal mt-6 text-balance text-4xl font-semibold leading-[1.04] tracking-tight text-heading sm:text-5xl lg:text-[3.7rem]">
+          Watch your busywork become an{' '}
+          <span className="serif text-[1.12em] font-normal">automation.</span>
         </h1>
 
         <p className="hero-reveal mx-auto mt-5 max-w-xl text-base leading-8 text-muted md:text-lg">
@@ -51,7 +45,7 @@ export function HeroSection() {
         </p>
 
         <div className="hero-reveal mt-7 flex flex-col items-center gap-2">
-          <span className="font-mono text-xs uppercase tracking-[0.18em] text-muted">I run a…</span>
+          <span className="text-xs uppercase tracking-[0.18em] text-muted">I run a…</span>
           <IndustrySelector className="justify-center" />
         </div>
 
@@ -59,7 +53,7 @@ export function HeroSection() {
           <AutomationBuilder />
         </div>
 
-        <p className="hero-reveal mt-5 font-mono text-xs text-muted">
+        <p className="hero-reveal mt-5 text-xs tracking-wide text-muted">
           No signup · real AI · your blueprint in seconds
         </p>
       </div>
