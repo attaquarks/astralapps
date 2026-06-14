@@ -11,7 +11,7 @@ export function ThemeToggle({ theme, onThemeChange }: ThemeToggleProps) {
   return (
     <button
       aria-label={isLight ? 'Switch to dark mode' : 'Switch to light mode'}
-      className="grid size-10 place-items-center rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-heading)] transition hover:border-cyan-300/60 hover:bg-[var(--color-surface-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300"
+      className="grid size-10 place-items-center rounded-full border border-border text-heading transition hover:border-border-strong hover:text-brand-soft"
       type="button"
       onClick={() => onThemeChange(isLight ? 'dark' : 'light')}
     >

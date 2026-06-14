@@ -1,33 +1,75 @@
 import { useEffect, useState } from 'react'
+import { IndustryProvider } from './context/IndustryContext'
+import { CommandCenterBackground } from './components/ui/CommandCenterBackground'
 import { Header } from './components/layout/Header'
-import { AboutSection } from './components/sections/AboutSection'
-import { ContactSection } from './components/sections/ContactSection'
+import { Footer } from './components/layout/Footer'
 import { HeroSection } from './components/sections/HeroSection'
-import { ProcessSection } from './components/sections/ProcessSection'
-import { ProjectsSection } from './components/sections/ProjectsSection'
+import { MetricsStrip } from './components/sections/MetricsStrip'
+import { BeforeAfterSection } from './components/sections/BeforeAfterSection'
+import { GraveyardSection } from './components/sections/GraveyardSection'
+import { TimelineSection } from './components/sections/TimelineSection'
 import { ServicesSection } from './components/sections/ServicesSection'
+import { BusinessAuditSection } from './components/sections/BusinessAuditSection'
+import { WorkSection } from './components/sections/WorkSection'
+import { TechMarquee } from './components/sections/TechMarquee'
+import { ProcessSection } from './components/sections/ProcessSection'
+import { RoiSection } from './components/sections/RoiSection'
+import { PricingSection } from './components/sections/PricingSection'
+import { BlueprintWizardSection } from './components/sections/BlueprintWizardSection'
+import { FaqSection } from './components/sections/FaqSection'
+import { RefusalSection } from './components/sections/RefusalSection'
+import { ContactSection } from './components/sections/ContactSection'
 
 export type ThemeMode = 'dark' | 'light'
 
+/* Read the theme the pre-paint script in index.html already resolved. */
+function getInitialTheme(): ThemeMode {
+  return document.documentElement.dataset.theme === 'light' ? 'light' : 'dark'
+}
+
 function App() {
-  const [theme, setTheme] = useState<ThemeMode>('dark')
+  const [theme, setTheme] = useState<ThemeMode>(getInitialTheme)
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
+    try {
+      localStorage.setItem('astral-theme', theme)
+    } catch {
+      /* storage unavailable — non-fatal */
+    }
   }, [theme])
 
   return (
-    <div className="min-h-screen overflow-hidden bg-[var(--color-bg)] text-[var(--color-text)]">
-      <Header theme={theme} onThemeChange={setTheme} />
-      <main>
-        <HeroSection />
-        <AboutSection />
-        <ServicesSection />
-        <ProjectsSection />
-        <ProcessSection />
-        <ContactSection />
-      </main>
-    </div>
+    <IndustryProvider>
+      <div className="relative min-h-screen text-text">
+        <CommandCenterBackground />
+        <Header theme={theme} onThemeChange={setTheme} />
+        <main>
+          {/* Hook — the site is the demo */}
+          <HeroSection />
+          <MetricsStrip />
+          {/* Story */}
+          <BeforeAfterSection />
+          <GraveyardSection />
+          <TimelineSection />
+          {/* Capability + interactive proof */}
+          <ServicesSection />
+          <BusinessAuditSection />
+          <WorkSection />
+          <TechMarquee />
+          <ProcessSection />
+          {/* Conversion */}
+          <RoiSection />
+          <PricingSection />
+          <BlueprintWizardSection />
+          {/* Trust + close */}
+          <FaqSection />
+          <RefusalSection />
+          <ContactSection />
+        </main>
+        <Footer />
+      </div>
+    </IndustryProvider>
   )
 }
 

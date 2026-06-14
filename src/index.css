@@ -1,63 +1,101 @@
 @import "tailwindcss";
 
+/*
+  AstralApps design system
+  Brand palette is derived from the logo mark (public/favicon.svg):
+  violet #863bff / #7e14ff and blue #47bfff over a deep space background.
+*/
+
+/* Map semantic + brand tokens to Tailwind utilities. `inline` keeps them
+   pointing at the runtime CSS variables below so theme switching works
+   without regenerating utilities (bg-bg, text-heading, from-brand, etc.). */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-heading: var(--heading);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-brand: var(--brand);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-strong: var(--brand-strong);
+  --color-accent: var(--accent);
+
+  --font-display: "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", "Menlo", monospace;
+}
+
 :root {
-  --color-bg: #06080f;
-  --color-heading: #f8fbff;
-  --color-text: #d5deea;
-  --color-text-muted: #91a1b7;
-  --color-border: rgba(153, 213, 255, 0.14);
-  --color-border-strong: rgba(153, 213, 255, 0.24);
-  --color-surface: rgba(12, 18, 30, 0.68);
-  --color-surface-soft: rgba(255, 255, 255, 0.04);
-  --color-surface-strong: rgba(20, 31, 48, 0.88);
-  --color-track: rgba(255, 255, 255, 0.08);
-  --color-glow-cyan: rgba(34, 211, 238, 0.22);
-  --color-hero-aura: rgba(88, 214, 255, 0.2);
-  font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: var(--color-text);
-  background: var(--color-bg);
+  /* Dark (default) */
+  --bg: #08060f;
+  --bg-2: #0c0918;
+  --surface: rgba(22, 17, 41, 0.55);
+  --surface-2: rgba(34, 26, 60, 0.72);
+  --border: rgba(168, 130, 255, 0.14);
+  --border-strong: rgba(168, 130, 255, 0.3);
+  --heading: #f4f1ff;
+  --text: #cdc7e4;
+  --muted: #948cb4;
+  --brand: #863bff;
+  --brand-soft: #a98bff;
+  --brand-strong: #7e14ff;
+  --accent: #47bfff;
+  --glow: rgba(134, 59, 255, 0.45);
+
+  color-scheme: dark;
+  font-family: var(--font-sans);
+  color: var(--text);
+  background-color: var(--bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-:root[data-theme='light'] {
-  --color-bg: #f7fafc;
-  --color-heading: #07111f;
-  --color-text: #253447;
-  --color-text-muted: #5f7188;
-  --color-border: rgba(15, 71, 104, 0.14);
-  --color-border-strong: rgba(15, 71, 104, 0.22);
-  --color-surface: rgba(255, 255, 255, 0.78);
-  --color-surface-soft: rgba(6, 17, 31, 0.04);
-  --color-surface-strong: rgba(255, 255, 255, 0.94);
-  --color-track: rgba(6, 17, 31, 0.08);
-  --color-glow-cyan: rgba(14, 165, 233, 0.2);
-  --color-hero-aura: rgba(14, 165, 233, 0.16);
+:root[data-theme="light"] {
+  --bg: #f6f4fc;
+  --bg-2: #ece7f8;
+  --surface: rgba(255, 255, 255, 0.7);
+  --surface-2: rgba(255, 255, 255, 0.92);
+  --border: rgba(126, 20, 255, 0.14);
+  --border-strong: rgba(126, 20, 255, 0.26);
+  --heading: #150b2c;
+  --text: #2e2748;
+  --muted: #6a6288;
+  --brand: #7c2bff;
+  --brand-soft: #9a6bff;
+  --brand-strong: #6a14e8;
+  --accent: #1f8fe0;
+  --glow: rgba(124, 43, 255, 0.22);
+
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+  /* offset anchored sections so they aren't hidden under the fixed header */
+  scroll-padding-top: 5.5rem;
 }
 
 body {
   margin: 0;
   min-width: 320px;
-  background:
-    radial-gradient(circle at top left, color-mix(in srgb, var(--color-hero-aura) 80%, transparent), transparent 36rem),
-    var(--color-bg);
+  background-color: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
 }
 
-* {
-  box-sizing: border-box;
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
 }
 
 button,
@@ -66,44 +104,231 @@ a {
 }
 
 ::selection {
-  background: rgba(103, 232, 249, 0.28);
-  color: var(--color-heading);
+  background: color-mix(in srgb, var(--brand) 40%, transparent);
+  color: var(--heading);
 }
+
+/* ---- Reusable layout + surface utilities ---- */
 
 .section-shell {
   position: relative;
   margin-inline: auto;
-  max-width: 1280px;
-  padding: 7rem 1.25rem;
-}
-
-@media (min-width: 768px) {
-  .section-shell {
-    padding-inline: 2rem;
-  }
-}
-
-.glass-card {
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  background:
-    linear-gradient(145deg, color-mix(in srgb, var(--color-surface-strong) 72%, transparent), var(--color-surface)),
-    var(--color-surface);
-  box-shadow:
-    0 24px 80px rgba(0, 0, 0, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(18px);
-  will-change: transform;
-}
-
-:root[data-theme='light'] .glass-card {
-  box-shadow:
-    0 24px 80px rgba(15, 43, 66, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  max-width: 1200px;
+  padding: 7rem 1.5rem;
 }
 
 @media (max-width: 767px) {
   .section-shell {
-    padding-block: 5rem;
+    padding-block: 4.5rem;
   }
+}
+
+.glass {
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(150deg, var(--surface-2), var(--surface));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.glass-card {
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background:
+    linear-gradient(150deg, var(--surface-2), var(--surface));
+  box-shadow:
+    0 30px 80px -40px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+:root[data-theme="light"] .glass-card {
+  box-shadow:
+    0 30px 70px -45px rgba(86, 35, 160, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Gradient hairline border on hover-able cards */
+.card-glow {
+  position: relative;
+  isolation: isolate;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+}
+.card-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(150deg, color-mix(in srgb, var(--brand) 60%, transparent), color-mix(in srgb, var(--accent) 50%, transparent));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.card-glow:hover::after {
+  opacity: 1;
+}
+
+.text-gradient {
+  background: linear-gradient(100deg, var(--brand-soft), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--brand-soft);
+}
+
+/* Soft animated aurora blob used behind ambient sections (no WebGL) */
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.5;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Marquee track */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 38s linear infinite;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(3%, -4%, 0) scale(1.08); }
+}
+.animate-drift {
+  animation: drift 18s ease-in-out infinite;
+}
+
+@keyframes pop {
+  from { opacity: 0; transform: translateY(8px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-pop {
+  animation: pop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---- Command-center / terminal system (#9 #10 #11) ---- */
+
+/* faint signal grid, like circuit traces, fading out from the top */
+.signal-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--brand) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--brand) 8%, transparent) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, #000 28%, transparent 76%);
+  mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, #000 28%, transparent 76%);
+}
+
+/* slow vertical scroll for the blurred JSON/webhook feed columns (#11) */
+@keyframes feed-scroll {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+.animate-feed {
+  animation: feed-scroll 44s linear infinite;
+}
+
+/* blinking terminal caret (#10) */
+@keyframes caret-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.caret::after {
+  content: "";
+  display: inline-block;
+  width: 0.55ch;
+  height: 1.05em;
+  margin-left: 3px;
+  translate: 0 0.16em;
+  background: var(--accent);
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+/* live status dot — radiating pulse for "in production right now" (#17) */
+@keyframes live-pulse {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 65%, transparent); }
+  70% { box-shadow: 0 0 0 7px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+.live-dot {
+  animation: live-pulse 2.2s ease-out infinite;
+}
+
+/* ---- Service mini-demos (#8): looping "the automation actually working" ---- */
+@keyframes anim-travel {
+  0% { left: 6%; opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { left: 94%; opacity: 0; }
+}
+.anim-travel { animation: anim-travel 2.6s ease-in-out infinite; }
+
+@keyframes anim-fill {
+  0%, 8% { width: 0; }
+  55%, 100% { width: 100%; }
+}
+.anim-fill { animation: anim-fill 3s ease-in-out infinite; }
+
+@keyframes anim-bar {
+  0%, 100% { transform: scaleY(0.22); }
+  45%, 55% { transform: scaleY(1); }
+}
+.anim-bar { animation: anim-bar 2.4s ease-in-out infinite; transform-origin: bottom; }
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .marquee-track,
+  .animate-drift,
+  .animate-pop,
+  .animate-feed,
+  .live-dot,
+  .anim-travel,
+  .anim-fill,
+  .anim-bar,
+  .caret::after {
+    animation: none;
+  }
+}
+
+/* Focus styling */
+:where(a, button, input, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Custom scrollbar (cosmetic, dark) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--brand) 40%, transparent);
+  border-radius: 9999px;
+  border: 3px solid var(--bg);
 }
