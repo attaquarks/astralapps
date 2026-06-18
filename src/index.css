@@ -1,63 +1,108 @@
 @import "tailwindcss";
 
+/*
+  AstralApps design system — editorial.
+  Light cream + ink by default, with a dark editorial variant. Restrained
+  palette (a single violet accent), hairline borders, generous whitespace,
+  bold sans + italic serif accents.
+*/
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-heading: var(--heading);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-brand: var(--brand);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-strong: var(--brand-strong);
+  --color-accent: var(--accent);
+
+  --font-display: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", "Menlo", monospace;
+  --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+}
+
 :root {
-  --color-bg: #06080f;
-  --color-heading: #f8fbff;
-  --color-text: #d5deea;
-  --color-text-muted: #91a1b7;
-  --color-border: rgba(153, 213, 255, 0.14);
-  --color-border-strong: rgba(153, 213, 255, 0.24);
-  --color-surface: rgba(12, 18, 30, 0.68);
-  --color-surface-soft: rgba(255, 255, 255, 0.04);
-  --color-surface-strong: rgba(20, 31, 48, 0.88);
-  --color-track: rgba(255, 255, 255, 0.08);
-  --color-glow-cyan: rgba(34, 211, 238, 0.22);
-  --color-hero-aura: rgba(88, 214, 255, 0.2);
-  font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: var(--color-text);
-  background: var(--color-bg);
+  /* Light editorial (default) */
+  --bg: #eeece4;
+  --bg-2: #e7e4da;
+  --surface: #faf9f5;
+  --surface-2: #ffffff;
+  --border: rgba(22, 19, 16, 0.12);
+  --border-strong: rgba(22, 19, 16, 0.22);
+  --heading: #161310;
+  --text: #3b352e;
+  --muted: #756f66;
+  --brand: #6d28d9;
+  --brand-soft: #7c3aed;
+  --brand-strong: #5b21b6;
+  --accent: #6d28d9;
+  --glow: rgba(109, 40, 217, 0.16);
+
+  color-scheme: light;
+  font-family: var(--font-sans);
+  color: var(--text);
+  background-color: var(--bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-:root[data-theme='light'] {
-  --color-bg: #f7fafc;
-  --color-heading: #07111f;
-  --color-text: #253447;
-  --color-text-muted: #5f7188;
-  --color-border: rgba(15, 71, 104, 0.14);
-  --color-border-strong: rgba(15, 71, 104, 0.22);
-  --color-surface: rgba(255, 255, 255, 0.78);
-  --color-surface-soft: rgba(6, 17, 31, 0.04);
-  --color-surface-strong: rgba(255, 255, 255, 0.94);
-  --color-track: rgba(6, 17, 31, 0.08);
-  --color-glow-cyan: rgba(14, 165, 233, 0.2);
-  --color-hero-aura: rgba(14, 165, 233, 0.16);
+:root[data-theme="dark"] {
+  /* Dark editorial */
+  --bg: #15120f;
+  --bg-2: #1b1713;
+  --surface: #201b16;
+  --surface-2: #271f18;
+  --border: rgba(245, 242, 236, 0.12);
+  --border-strong: rgba(245, 242, 236, 0.2);
+  --heading: #f6f3ec;
+  --text: #cac3b7;
+  --muted: #8f887d;
+  --brand: #b69bff;
+  --brand-soft: #cbb8ff;
+  --brand-strong: #9a78ff;
+  --accent: #b69bff;
+  --glow: rgba(182, 155, 255, 0.28);
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+  scroll-padding-top: 5.5rem;
 }
 
 body {
   margin: 0;
   min-width: 320px;
-  background:
-    radial-gradient(circle at top left, color-mix(in srgb, var(--color-hero-aura) 80%, transparent), transparent 36rem),
-    var(--color-bg);
+  background-color: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  font-feature-settings: "ss01";
 }
 
-* {
-  box-sizing: border-box;
+h1, h2, h3, h4 {
+  font-family: var(--font-sans);
+  letter-spacing: -0.02em;
+}
+
+/* italic-serif accent for editorial headings */
+.serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
 }
 
 button,
@@ -66,44 +111,172 @@ a {
 }
 
 ::selection {
-  background: rgba(103, 232, 249, 0.28);
-  color: var(--color-heading);
+  background: color-mix(in srgb, var(--brand) 22%, transparent);
+  color: var(--heading);
 }
+
+/* ---- Layout + surfaces ---- */
 
 .section-shell {
   position: relative;
   margin-inline: auto;
-  max-width: 1280px;
-  padding: 7rem 1.25rem;
-}
-
-@media (min-width: 768px) {
-  .section-shell {
-    padding-inline: 2rem;
-  }
-}
-
-.glass-card {
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  background:
-    linear-gradient(145deg, color-mix(in srgb, var(--color-surface-strong) 72%, transparent), var(--color-surface)),
-    var(--color-surface);
-  box-shadow:
-    0 24px 80px rgba(0, 0, 0, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(18px);
-  will-change: transform;
-}
-
-:root[data-theme='light'] .glass-card {
-  box-shadow:
-    0 24px 80px rgba(15, 43, 66, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  max-width: 1200px;
+  padding: 6.5rem 1.5rem;
 }
 
 @media (max-width: 767px) {
   .section-shell {
-    padding-block: 5rem;
+    padding-block: 4rem;
   }
+}
+
+.glass {
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.glass-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow:
+    0 1px 2px rgba(22, 19, 16, 0.04),
+    0 26px 50px -42px rgba(22, 19, 16, 0.3);
+}
+
+/* hover-able cards — subtle hairline + lift */
+.card-glow {
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.card-glow:hover {
+  border-color: var(--border-strong);
+  box-shadow:
+    0 1px 2px rgba(22, 19, 16, 0.04),
+    0 30px 60px -38px rgba(22, 19, 16, 0.32);
+}
+
+/* emphasis — a single restrained violet accent */
+.text-gradient {
+  color: var(--brand);
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* soft ambient blob (used sparingly) */
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.4;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* ---- Animations ---- */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(3%, -4%, 0) scale(1.08); }
+}
+.animate-drift { animation: drift 20s ease-in-out infinite; }
+
+@keyframes pop {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-pop { animation: pop 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* faint registration grid */
+.signal-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--heading) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--heading) 6%, transparent) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, #000 28%, transparent 76%);
+  mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, #000 28%, transparent 76%);
+}
+
+@keyframes feed-scroll {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+.animate-feed { animation: feed-scroll 44s linear infinite; }
+
+/* live status dot */
+@keyframes live-pulse {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand) 55%, transparent); }
+  70% { box-shadow: 0 0 0 7px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+.live-dot { animation: live-pulse 2.2s ease-out infinite; }
+
+/* service mini-demos (#8) */
+@keyframes anim-travel {
+  0% { left: 6%; opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { left: 94%; opacity: 0; }
+}
+.anim-travel { animation: anim-travel 2.6s ease-in-out infinite; }
+
+@keyframes anim-fill {
+  0%, 8% { width: 0; }
+  55%, 100% { width: 100%; }
+}
+.anim-fill { animation: anim-fill 3s ease-in-out infinite; }
+
+@keyframes anim-bar {
+  0%, 100% { transform: scaleY(0.22); }
+  45%, 55% { transform: scaleY(1); }
+}
+.anim-bar { animation: anim-bar 2.4s ease-in-out infinite; transform-origin: bottom; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .marquee-track,
+  .animate-drift,
+  .animate-pop,
+  .animate-feed,
+  .live-dot,
+  .anim-travel,
+  .anim-fill,
+  .anim-bar {
+    animation: none;
+  }
+}
+
+/* Focus styling */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 9999px;
+  border: 4px solid var(--bg);
 }

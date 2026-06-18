@@ -11,6 +11,11 @@ node_modules
 dist
 dist-ssr
 *.local
+
+# Local env files (keep .env.example tracked)
+.env
+.env.*
+!.env.example
 .agents
 skills-lock.json
 

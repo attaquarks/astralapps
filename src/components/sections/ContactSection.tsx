@@ -1,50 +1,101 @@
-import { useRef } from 'react'
-import { useGSAP } from '@gsap/react'
+import { site, socialLinks } from '../../data/site'
+import { useReveal } from '../../hooks/useReveal'
 import { Button } from '../ui/Button'
-import { gsap } from '../../lib/gsap'
-import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion'
+import { Icon } from '../ui/Icon'
+import { ContactForm } from './ContactForm'
+
+function CalendarEmbed() {
+  if (site.calendarUrl) {
+    return (
+      <div className="h-136 overflow-hidden rounded-2xl border border-border bg-bg">
+        <iframe src={site.calendarUrl} title="Book a call" className="h-full w-full" />
+      </div>
+    )
+  }
+  // Fallback until a Cal.com / Calendly link is added (see data/site.ts).
+  return (
+    <div className="glass-card grid h-136 place-items-center rounded-2xl p-8 text-center">
+      <div className="flex max-w-xs flex-col items-center gap-4">
+        <span className="grid size-12 place-items-center rounded-2xl border border-border-strong bg-surface text-brand-soft">
+          <svg className="size-6" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3" y="4.5" width="18" height="16" rx="2" stroke="currentColor" strokeWidth="1.6" />
+            <path d="M3 9h18M8 3v3M16 3v3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+          </svg>
+        </span>
+        <h3 className="font-display text-lg font-semibold text-heading">Pick a time that works</h3>
+        <p className="text-sm leading-6 text-muted">
+          Grab a 30-minute slot and we'll walk through your workflow live.
+        </p>
+        <Button href={`mailto:${site.email}`} withArrow>
+          Book via email
+        </Button>
+      </div>
+    </div>
+  )
+}
 
 export function ContactSection() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const prefersReducedMotion = usePrefersReducedMotion()
-
-  useGSAP(
-    () => {
-      if (prefersReducedMotion) return
-
-      gsap.from('.contact-reveal', {
-        autoAlpha: 0,
-        y: 34,
-        stagger: 0.1,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 75%',
-          toggleActions: 'play none none reverse',
-        },
-      })
-    },
-    { dependencies: [prefersReducedMotion], revertOnUpdate: true, scope: sectionRef },
-  )
+  const sectionRef = useReveal<HTMLElement>()
 
   return (
-    <section className="section-shell pb-16" id="contact" ref={sectionRef}>
-      <div className="relative overflow-hidden rounded-lg border border-[var(--color-border-strong)] bg-[linear-gradient(135deg,var(--color-surface-strong),var(--color-surface))] p-7 md:p-12">
-        <div className="absolute right-0 top-0 h-64 w-64 rounded-full bg-cyan-300/12 blur-3xl" />
-        <div className="absolute bottom-0 left-0 h-52 w-52 rounded-full bg-emerald-300/10 blur-3xl" />
-        <div className="relative z-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
-          <div>
-            <p className="contact-reveal mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-cyan-300">
+    <section className="section-shell" id="contact" ref={sectionRef}>
+      <div className="relative overflow-hidden rounded-3xl border border-border bg-surface p-6 md:p-10">
+        <div className="relative z-10">
+          <div className="max-w-2xl">
+            <p data-reveal className="eyebrow">
               Contact
             </p>
-            <h2 className="contact-reveal max-w-3xl text-3xl font-semibold leading-tight text-[var(--color-heading)] md:text-6xl">
-              Ready to build something intelligent?
+            <h2
+              data-reveal
+              className="mt-4 text-balance font-display text-3xl font-semibold leading-[1.1] text-heading md:text-5xl"
+            >
+              Let's automate something <span className="serif text-[1.1em] font-normal">intelligent.</span>
             </h2>
-            <p className="contact-reveal mt-6 text-lg leading-8 text-[var(--color-text-muted)]">
-              Email: hello@astralapps.example
+            <p data-reveal className="mt-5 text-base leading-8 text-muted md:text-lg">
+              Book a call to talk through it live, or send a message — we usually reply within two
+              business days.
             </p>
           </div>
-          <div className="contact-reveal">
-            <Button href="mailto:hello@astralapps.example">Contact Us</Button>
+
+          <div className="mt-8 grid gap-6 lg:grid-cols-2 lg:items-start">
+            <div data-reveal>
+              <CalendarEmbed />
+            </div>
+            <div data-reveal>
+              <ContactForm />
+            </div>
+          </div>
+
+          <div data-reveal className="mt-8 flex flex-wrap items-center gap-3">
+            <a
+              href={`mailto:${site.email}`}
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-2 text-sm text-text transition hover:border-border-strong hover:text-heading"
+            >
+              <svg className="size-4 text-brand-soft" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M4 6h16v12H4zM4 7l8 6 8-6"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              {site.email}
+            </a>
+            <div className="flex items-center gap-2">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  aria-label={social.label}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="grid size-10 place-items-center rounded-full border border-border text-muted transition hover:border-border-strong hover:text-heading"
+                >
+                  <Icon name={social.icon} className="size-4" />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>
