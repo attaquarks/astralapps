@@ -1,109 +1,515 @@
 @import "tailwindcss";
 
+/* Self-hosted faces (no hosted font stylesheets): Saira superfamily carries the
+   star-chart voice, Chivo Mono is reserved for measurement and chart data. */
+@import "@fontsource/saira/400.css";
+@import "@fontsource/saira/500.css";
+@import "@fontsource/saira/600.css";
+@import "@fontsource/saira-condensed/500.css";
+@import "@fontsource/saira-condensed/600.css";
+@import "@fontsource/saira-condensed/700.css";
+@import "@fontsource/saira-stencil-one/400.css";
+@import "@fontsource/chivo-mono/400.css";
+@import "@fontsource/chivo-mono/500.css";
+
+/*
+ * ASTRAL CARTOGRAPHY — AstralApps design system.
+ * The page is a star chart being drawn: a scattered night field resolves into
+ * a working constellation as the visitor scrolls. Deep violet-black ground
+ * carries the persistent field; the palette is the logo's own — violet fills,
+ * pale lavender reading accent, ice-blue signal color, one lavender-white dawn
+ * band as the payoff. Light lives inside the canvas (nodes, links, beams) —
+ * never in box-shadow halos, glass, or gradient text.
+ */
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-heading: var(--heading);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-brand: var(--brand);
+  --color-accent: var(--accent);
+  --color-iris: var(--iris);
+  --color-lavender: var(--lavender);
+  --color-day: var(--day);
+
+  --font-display: "Saira Condensed", "Arial Narrow", ui-sans-serif, sans-serif;
+  --font-sans: "Saira", ui-sans-serif, system-ui, sans-serif;
+  --font-stencil: "Saira Stencil One", "Saira Condensed", sans-serif;
+  --font-mono: "Chivo Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+
 :root {
-  --color-bg: #06080f;
-  --color-heading: #f8fbff;
-  --color-text: #d5deea;
-  --color-text-muted: #91a1b7;
-  --color-border: rgba(153, 213, 255, 0.14);
-  --color-border-strong: rgba(153, 213, 255, 0.24);
-  --color-surface: rgba(12, 18, 30, 0.68);
-  --color-surface-soft: rgba(255, 255, 255, 0.04);
-  --color-surface-strong: rgba(20, 31, 48, 0.88);
-  --color-track: rgba(255, 255, 255, 0.08);
-  --color-glow-cyan: rgba(34, 211, 238, 0.22);
-  --color-hero-aura: rgba(88, 214, 255, 0.2);
-  font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: var(--color-text);
-  background: var(--color-bg);
+  /* House default: dark sky */
+  --bg: #050409;
+  --bg-2: #0a0714;
+  --surface: #0e0b1a;
+  --surface-2: #141024;
+  --border: rgba(201, 180, 255, 0.13);
+  --border-strong: rgba(201, 180, 255, 0.3);
+  --heading: #f1eefa;
+  --text: #d6d1e6;
+  --muted: #9d95ba;
+  --brand: #c9b4ff; /* pale lavender-violet — the reading accent on dark */
+  --accent: #47bfff; /* ice — the signal color: caret, marks, live states */
+  --iris: #863bff; /* the logo core — fills, commits, selection */
+  --lavender: #ede6ff; /* the logo highlight */
+  --day: #f1eefa;
+
+  color-scheme: dark;
+  font-family: var(--font-sans);
+  color: var(--text);
+  background-color: var(--bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-:root[data-theme='light'] {
-  --color-bg: #f7fafc;
-  --color-heading: #07111f;
-  --color-text: #253447;
-  --color-text-muted: #5f7188;
-  --color-border: rgba(15, 71, 104, 0.14);
-  --color-border-strong: rgba(15, 71, 104, 0.22);
-  --color-surface: rgba(255, 255, 255, 0.78);
-  --color-surface-soft: rgba(6, 17, 31, 0.04);
-  --color-surface-strong: rgba(255, 255, 255, 0.94);
-  --color-track: rgba(6, 17, 31, 0.08);
-  --color-glow-cyan: rgba(14, 165, 233, 0.2);
-  --color-hero-aura: rgba(14, 165, 233, 0.16);
-}
+/* The dawn band: an opaque light payoff. Everything semantic flips locally,
+   so Tailwind color utilities resolve to ink inside it. */
+.band-day {
+  --bg: #e9e5f4;
+  --bg-2: #e2ddf0;
+  --surface: #f3f0fb;
+  --surface-2: #fbfaff;
+  --border: rgba(20, 16, 31, 0.14);
+  --border-strong: rgba(20, 16, 31, 0.32);
+  --heading: #14101f;
+  --text: #2e2a3e;
+  --muted: #665f80;
+  --brand: #6d2bf0;
+  --accent: #0b7fc4;
+  --iris: #6d2bf0;
+  --lavender: #14101f;
+  --day: #14101f;
 
-html {
-  scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-}
-
-body {
-  margin: 0;
-  min-width: 320px;
-  background:
-    radial-gradient(circle at top left, color-mix(in srgb, var(--color-hero-aura) 80%, transparent), transparent 36rem),
-    var(--color-bg);
+  color-scheme: light;
+  color: var(--text);
 }
 
 * {
   box-sizing: border-box;
 }
 
-button,
-a {
-  -webkit-tap-highlight-color: transparent;
+html {
+  scroll-padding-top: 5.5rem;
 }
 
-::selection {
-  background: rgba(103, 232, 249, 0.28);
-  color: var(--color-heading);
+body {
+  margin: 0;
+  min-width: 320px;
+  /* No background here: html carries the page ground, and an opaque body
+     background would paint over the fixed field wrapper at -z-10. */
+  overflow-x: hidden;
+  font-feature-settings: "tnum" 0;
 }
 
-.section-shell {
-  position: relative;
-  margin-inline: auto;
-  max-width: 1280px;
-  padding: 7rem 1.25rem;
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  line-height: 0.98;
+  color: var(--heading);
+  font-weight: 600;
+  text-wrap: balance;
 }
 
-@media (min-width: 768px) {
-  .section-shell {
-    padding-inline: 2rem;
+/* ---- Type voices ---- */
+
+.cue-code {
+  font-family: var(--font-stencil);
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.data {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.caret::after {
+  content: "";
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  margin-left: 0.15em;
+  vertical-align: text-bottom;
+  background: var(--accent);
+  animation: caret-blink 1.05s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
   }
 }
 
-.glass-card {
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  background:
-    linear-gradient(145deg, color-mix(in srgb, var(--color-surface-strong) 72%, transparent), var(--color-surface)),
-    var(--color-surface);
-  box-shadow:
-    0 24px 80px rgba(0, 0, 0, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(18px);
+/* Masked line reveals — author headings as
+   <span class="mask-line"><span class="mask-inner">…</span></span>
+   and animate .mask-inner from yPercent 110. */
+.mask-line {
+  display: block;
+  overflow: hidden;
+  padding-top: 0.1em;
+  margin-top: -0.1em;
+}
+.mask-inner {
+  display: block;
   will-change: transform;
 }
 
-:root[data-theme='light'] .glass-card {
-  box-shadow:
-    0 24px 80px rgba(15, 43, 66, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+/* ---- Layout ---- */
+
+.band {
+  position: relative;
+  padding-block: 6.5rem;
 }
 
-@media (max-width: 767px) {
-  .section-shell {
-    padding-block: 5rem;
+@media (min-width: 768px) {
+  .band {
+    padding-block: 9rem;
   }
+}
+
+.shell {
+  position: relative;
+  z-index: 1;
+  margin-inline: auto;
+  max-width: 76rem;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .shell {
+    padding-inline: 2.5rem;
+  }
+}
+
+/* Meridian: the structural line of the chart. A bright core over a violet
+   wash, never a glow halo. */
+.meridian {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 4%,
+    color-mix(in srgb, var(--brand) 65%, transparent) 30%,
+    color-mix(in srgb, var(--brand) 65%, transparent) 70%,
+    transparent 96%
+  );
+  pointer-events: none;
+}
+
+/* Channel: the panel furniture of the world. Hairline edge, ink ground,
+   a machined top edge — no glass, no blur. */
+.channel {
+  position: relative;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--surface-2), var(--surface));
+}
+
+.channel::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: color-mix(in srgb, var(--brand) 26%, transparent);
+  pointer-events: none;
+}
+
+.channel-day {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+/* State as mark — concrete marks instead of color-only states. */
+
+/* struck: a measured strike through finished/removed work */
+.mark-struck {
+  position: relative;
+}
+.mark-struck::after {
+  content: "";
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  top: 54%;
+  height: 2px;
+  background: var(--accent);
+  transform: rotate(-1.2deg);
+}
+
+/* punched: the selected/committed marker */
+.mark-punched {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--heading);
+  box-shadow: inset 0 0 0 2px var(--bg);
+}
+
+/* tape flag: where you stopped */
+.mark-flag {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-top: 0.45rem solid transparent;
+  border-bottom: 0.45rem solid transparent;
+  border-left: 0.7rem solid var(--accent);
+}
+
+/* Inputs machined like the rest of the chart */
+.field {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 80%, transparent);
+  color: var(--heading);
+  padding: 0.7rem 1rem;
+  font-size: 0.925rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.field::placeholder {
+  color: var(--muted);
+}
+
+.field:focus {
+  border-color: color-mix(in srgb, var(--brand) 60%, transparent);
+}
+
+.field[aria-invalid="true"] {
+  border-color: var(--accent);
+}
+
+/* ---- The persistent field's frame ---- */
+
+/* Matte grain over the canvas, from the pinned particle-drift composition. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Intro curtain: full black, holds the mark + decode wordmark until the
+   visitor's first scroll lifts it away. */
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: #050409;
+  will-change: transform;
+}
+
+/* ---- Motion ---- */
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.animate-pop {
+  animation: pop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* intro curtain scroll cue */
+@keyframes cue-drop {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(5px);
+    opacity: 0.45;
+  }
+}
+.scroll-cue-chevron {
+  animation: cue-drop 1.8s ease-in-out infinite;
+}
+
+/* service channel demos */
+@keyframes anim-travel {
+  0% {
+    left: 6%;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    left: 94%;
+    opacity: 0;
+  }
+}
+.anim-travel {
+  animation: anim-travel 2.6s ease-in-out infinite;
+}
+
+@keyframes anim-fill {
+  0%,
+  8% {
+    width: 0;
+  }
+  55%,
+  100% {
+    width: 100%;
+  }
+}
+.anim-fill {
+  animation: anim-fill 3s ease-in-out infinite;
+}
+
+@keyframes anim-bar {
+  0%,
+  100% {
+    transform: scaleY(0.22);
+  }
+  45%,
+  55% {
+    transform: scaleY(1);
+  }
+}
+.anim-bar {
+  animation: anim-bar 2.4s ease-in-out infinite;
+  transform-origin: bottom;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .animate-pop,
+  .anim-travel,
+  .anim-fill,
+  .anim-bar,
+  .caret::after,
+  .scroll-cue-chevron {
+    animation: none;
+  }
+}
+
+/* ---- Browser surfaces, themed ---- */
+
+::selection {
+  background: color-mix(in srgb, var(--iris) 78%, var(--bg));
+  color: var(--lavender);
+}
+
+.band-day ::selection {
+  background: #6d2bf0;
+  color: #fbfaff;
+}
+
+* {
+  caret-color: var(--accent);
+}
+
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--heading);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+p a {
+  text-underline-offset: 3px;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 9999px;
+  border: 4px solid var(--bg);
+}
+
+input[type="range"] {
+  accent-color: var(--brand);
+}
+
+/* ---- Chapter washes: the atmosphere each band owns ---- */
+
+.wash-iris::before,
+.wash-firstlight::before,
+.wash-signal::before,
+.wash-dawn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.wash-iris::before {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    color-mix(in srgb, var(--iris) 16%, transparent) 58%,
+    color-mix(in srgb, var(--iris) 6%, transparent) 100%
+  );
+}
+
+.wash-firstlight::before {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--iris) 14%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 16%, transparent) 44%,
+    color-mix(in srgb, var(--lavender) 10%, transparent) 100%
+  );
+}
+
+.wash-signal::before {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--iris) 6%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 10%, transparent) 55%,
+    color-mix(in srgb, var(--accent) 4%, transparent) 100%
+  );
+}
+
+.wash-dawn::before {
+  background: radial-gradient(
+    ellipse 70% 46% at 50% 108%,
+    color-mix(in srgb, var(--day) 9%, transparent),
+    transparent 72%
+  );
 }

@@ -1,31 +1,81 @@
-import type { AnchorHTMLAttributes, ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
-type ButtonProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
+type ButtonProps = {
   children: ReactNode
-  variant?: 'primary' | 'secondary'
+  href?: string
+  type?: 'button' | 'submit'
+  variant?: 'primary' | 'secondary' | 'ghost'
+  size?: 'md' | 'lg'
+  withArrow?: boolean
+  disabled?: boolean
+  onClick?: () => void
+  className?: string
+  target?: string
+  rel?: string
+  ariaLabel?: string
 }
 
-export function Button({ children, className = '', variant = 'primary', ...props }: ButtonProps) {
-  const variantClass =
-    variant === 'primary'
-      ? 'border-cyan-300/70 bg-cyan-300 text-slate-950 shadow-[0_0_36px_rgba(34,211,238,0.28)] hover:bg-cyan-200'
-      : 'border-[var(--color-border-strong)] bg-[var(--color-surface)] text-[var(--color-heading)] hover:border-cyan-300/60 hover:bg-[var(--color-surface-strong)]'
+const sizes = {
+  md: 'px-5 py-2.5 text-sm',
+  lg: 'px-7 py-3.5 text-[0.95rem]',
+}
+
+const variants = {
+  /* Ink inverts with the band: day text on blackout, ink fill on the day wash. */
+  primary: 'border border-transparent bg-heading text-bg hover:opacity-85',
+  secondary: 'border border-border-strong text-heading hover:bg-surface',
+  ghost: 'border border-transparent text-muted hover:text-heading',
+}
+
+export function Button({
+  children,
+  href,
+  type = 'button',
+  variant = 'primary',
+  size = 'md',
+  withArrow = false,
+  disabled = false,
+  onClick,
+  className = '',
+  target,
+  rel,
+  ariaLabel,
+}: ButtonProps) {
+  const classes = `group inline-flex min-h-11 items-center justify-center gap-2.5 uppercase tracking-[0.08em] font-medium transition duration-200 disabled:cursor-not-allowed disabled:opacity-50 ${sizes[size]} ${variants[variant]} ${className}`
+
+  const inner = (
+    <>
+      {children}
+      {withArrow && (
+        <svg
+          aria-hidden="true"
+          className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M5 12h14m-6-6 6 6-6 6"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.8"
+          />
+        </svg>
+      )}
+    </>
+  )
+
+  if (href) {
+    return (
+      <a className={classes} href={href} target={target} rel={rel} aria-label={ariaLabel} onClick={onClick}>
+        {inner}
+      </a>
+    )
+  }
 
   return (
-    <a
-      className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border px-5 py-3 text-sm font-semibold transition duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300 ${variantClass} ${className}`}
-      {...props}
-    >
-      {children}
-      <svg aria-hidden="true" className="size-4" viewBox="0 0 24 24" fill="none">
-        <path
-          d="M5 12h14m-6-6 6 6-6 6"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.8"
-        />
-      </svg>
-    </a>
+    <button className={classes} type={type} disabled={disabled} onClick={onClick} aria-label={ariaLabel}>
+      {inner}
+    </button>
   )
 }

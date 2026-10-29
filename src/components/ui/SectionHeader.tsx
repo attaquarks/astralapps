@@ -1,22 +1,29 @@
 type SectionHeaderProps = {
   title: string
-  eyebrow: string
-  description: string
+  description?: string
   align?: 'left' | 'center'
 }
 
-export function SectionHeader({ title, eyebrow, description, align = 'left' }: SectionHeaderProps) {
+/*
+ * Heading-first: the heading carries its own weight — no eyebrow label above
+ * it. The chapter designation lives in the chart rail, not in the header.
+ * The title enters as a masked line (data-mask); supporting copy fades in.
+ */
+export function SectionHeader({ title, description, align = 'left' }: SectionHeaderProps) {
   return (
     <div className={`max-w-3xl ${align === 'center' ? 'mx-auto text-center' : ''}`}>
-      <p className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-cyan-300">
-        {eyebrow}
-      </p>
-      <h2 className="text-3xl font-semibold leading-tight text-[var(--color-heading)] md:text-5xl">
-        {title}
+      <h2 className="text-4xl md:text-[3.4rem]">
+        <span className="mask-line">
+          <span className="mask-inner" data-mask>
+            {title}
+          </span>
+        </span>
       </h2>
-      <p className="mt-5 text-base leading-8 text-[var(--color-text-muted)] md:text-lg">
-        {description}
-      </p>
+      {description && (
+        <p data-reveal className="mt-6 text-base leading-8 text-muted md:text-lg md:leading-9">
+          {description}
+        </p>
+      )}
     </div>
   )
 }

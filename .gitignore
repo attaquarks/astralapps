@@ -11,7 +11,13 @@ node_modules
 dist
 dist-ssr
 *.local
+
+# Local env files (keep .env.example tracked)
+.env
+.env.*
+!.env.example
 .agents
+.impeccable
 skills-lock.json
 
 # Editor directories and files
